@@ -1,0 +1,1 @@
+g++ main.cpp -I C:\\'Program Files'\\MySQL\\'MySQL Server 8.0'\\include -L C:\\'Program Files'\\MySQL\\'MySQL Server 8.0'\\lib -l mysql -std=c++11
