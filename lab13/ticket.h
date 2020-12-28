@@ -33,6 +33,11 @@ class dbClient  {
         }
         return make_pair(title,rows);
     }
+
+    int count(string cmd)   {
+        auto q=query(cmd);
+        return q.second.size();
+    }
     bool execute(const string& cmd) {
         if (mysql_query(&mysql, cmd.c_str())) 
             return 0;
@@ -40,6 +45,7 @@ class dbClient  {
     }
 
     static string flitter(string s)    {
+        if (s=="NULL") return s;
         string t;
         for (char c:s)  {
             if (c=='\''||c=='\"')
@@ -173,12 +179,12 @@ public:
                         where p_id="+to_string(p_id)+";");
     }
 
-    bool addUser(string u_nickname,string u_pwdhash)    {
+    bool addUser(string u_nickname,size_t u_pwdhash)    {
         int u_id=getid("select u_id from user");
         return execute("insert into user\
                             value("+to_string(u_id)+","+\
                                     flitter(u_nickname)+","+\
-                                    u_pwdhash+");");
+                                    to_string(u_pwdhash)+");");
     }
     bool updUser(int u_id,string u_nickname,string u_pwdhash)    {
         return execute("update user\

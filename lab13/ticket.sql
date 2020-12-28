@@ -22,13 +22,13 @@ select * from vehicle;
 create table user  ( 
     u_id int not null,
     u_nickname varchar(20) unique not null,
-    u_pwdhash varchar(20) not null,
+    u_pwdhash bigint unsigned not null,
     primary key (u_id)
 ) ENGINE=InnoDB,charset=gbk;
 
 insert into user
-    value   (1,'Zayin','sfgykgdbmndgj'),
-            (2,'Ziyin','akjfgfkhajgsh');
+    value   (1,'Zayin',9426639596209158849),
+            (2,'Ziyin',10852539927295326949);
 
 select * from user;
 
@@ -98,15 +98,15 @@ select * from book;
 create table admin  ( 
     a_id int not null,
     a_nickname varchar(20) unique not null,
-    a_pwdhash varchar(20) not null,
+    a_pwdhash bigint unsigned not null,
     primary key (a_id)
 ) ENGINE=InnoDB,charset=gbk;
 
 insert into admin
-    value   (1,'xlh','adhakjaaasaad'),
-            (2,'xjc','adhakjaaasaad'),
-            (3,'xby','adhakjaaasaad'),
-            (4,'xjj','adhakjaaasaad');
+    value   (1,'xlh',13610474319179662562),
+            (2,'xjc',7783510168219219153),
+            (3,'xby',101778777230498260),
+            (4,'xjj',17609314202929431821);
 
 select * from admin;
 

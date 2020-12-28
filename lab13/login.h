@@ -1,5 +1,6 @@
 #pragma once
 #include<bits/stdc++.h>
+#include"ticket.h"
 using namespace std;
 
 size_t strHash(string s)    {
@@ -28,39 +29,33 @@ namespace pwdClient  {
     #define mysqlConnect \
         MYSQL mysql;\
         mysql_init(&mysql);\
-        if (!mysql_real_connect(&mysql, "localhost", "root", "123456", "dingbao", 3306, 0, 0))\
+        if (!mysql_real_connect(&mysql, "localhost", "root", "123456", "ticket", 3306, 0, 0))\
             throw "mysql connection failed.";\
 
     bool query(string table,string account,size_t& pwd)    {
         mysqlConnect;
 
         if (mysql_query(&mysql,string(
-            "select pwd\
+            "select "+table.substr(0,1)+"_pwdhash\
             from "+table+"\
-            where account="+flitter(account)
-        ).c_str())) 
+            where "+table.substr(0,1)+"_nickname="+flitter(account)).c_str()
+        ))  { 
+            cerr<<"ERROR:"<<mysql_error(&mysql)<<endl;
             return 0;
+        }
 
         MYSQL_RES* res=mysql_store_result(&mysql);
         MYSQL_ROW row=mysql_fetch_row(res);
+        if (!row) return 0;
         pwd=atoull(row[0]);
         return 1;
-    }
-
-    bool insert(string table,string account,size_t pwd) {
-        mysqlConnect;
-
-        return mysql_query(&mysql,string(
-            "insert into "+table+"\
-                value("+flitter(account)+","+to_string(pwd)+");"
-        ).c_str());
     }
 }
 
 namespace adminLogin {
     bool signIn(string account,string pwd)  {
         size_t h1=strHash(pwd),h2;
-        bool flag=pwdClient::query("user",account,h2);
+        bool flag=pwdClient::query("admin",account,h2);
         return flag&&h1==h2;
     }
 }
@@ -75,6 +70,7 @@ namespace userLogin {
         size_t h;
         if (pwdClient::query("user",account,h))
             return 0;
-        return pwdClient::insert("user",account,strHash(pwd));
+        dbClient dbc;
+        return dbc.addUser(account,strHash(pwd));
     }
 }

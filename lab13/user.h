@@ -5,10 +5,9 @@
 using namespace std;
 
 struct user  {
-    int u_id;
+    const int u_id;
     dbClient dbc;
-    user(string name="",string pwd=""):name(name)   {
-        u_id=userLogin::signIn(name,pwd);
+    user(string name="",string pwd=""):u_id(userLogin::signIn(name,pwd))   {
         if (!~u_id)
             throw "account not exist or wrong password.";
     }
@@ -16,13 +15,13 @@ struct user  {
     bool book(int v_id,vector<int> p_ids)    {
         return dbc.addBook(u_id,v_id,p_ids);
     }    
-    bool addPassenger(string p_idcard_no,string p_name,string p_addr,string p_phone)    {
-        return dbc.addBook(u_id,p_idcard_no,p_name,p_addr,p_phone);
+    bool addPassenger(string p_idcard_no,string p_name,string p_addr="NULL",string p_phone="NULL")    {
+        return dbc.addPassenger(u_id,p_idcard_no,p_name,p_addr,p_phone);
     }
     bool updPassenger(int p_id,string p_idcard_no,string p_name,string p_addr,string p_phone)    {
-        return dbc.addBook(p_id,p_idcard_no,p_name,p_addr,p_phone);
+        return dbc.updPassenger(p_id,p_idcard_no,p_name,p_addr,p_phone);
     }
     bool refund(int b_id)   {
-        return dbc.delOrders(u_id,b_id);
+        return dbc.delBook(u_id,b_id);
     }
 };
