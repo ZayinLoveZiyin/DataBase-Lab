@@ -34,43 +34,38 @@ namespace pwdClient  {
         if (!mysql_real_connect(&mysql, "localhost", "root", "123456", "ticket", 3306, 0, 0))\
             throw "mysql connection failed.";\
 
-    bool query(string table,string account,size_t& pwd)    {
+    int query(string table,string account,string cond="true")    {
         mysqlConnect;
 
         if (mysql_query(&mysql,string(
-            "select "+table.substr(0,1)+"_pwdhash\
+            "select "+table.substr(0,1)+"_id\
             from "+table+"\
-            where "+table.substr(0,1)+"_nickname="+flitter(account)).c_str()
-        ))  { 
+            where "+table.substr(0,1)+"_nickname="+flitter(account)+"\
+            and "+cond
+        ).c_str()))  { 
             cerr<<"ERROR:"<<mysql_error(&mysql)<<endl;
             return 0;
         }
 
         MYSQL_RES* res=mysql_store_result(&mysql);
         MYSQL_ROW row=mysql_fetch_row(res);
-        if (!row) return 0;
-        pwd=atoull(row[0]);
-        return 1;
+        if (!row) return -1;
+        return atoi(row[0]);
     }
 }
 
 namespace adminLogin {
-    bool signIn(string account,string pwd)  {
-        size_t h1=strHash(pwd),h2;
-        bool flag=pwdClient::query("admin",account,h2);
-        return flag&&h1==h2;
+    int signIn(string account,string pwd)  {
+        return pwdClient::query("admin",account,"a_pwdhash="+to_string(strHash(pwd)));
     }
 }
 
 namespace userLogin {
-    bool signIn(string account,string pwd)  {
-        size_t h1=strHash(pwd),h2;
-        bool flag=pwdClient::query("user",account,h2);
-        return flag&&h1==h2;
+    int signIn(string account,string pwd)  {        
+        return pwdClient::query("user",account,"u_pwdhash="+to_string(strHash(pwd)));
     }
     bool signUp(string account,string pwd)  {
-        size_t h;
-        if (pwdClient::query("user",account,h))
+        if (~pwdClient::query("user",account))
             return 0;
         dbClient dbc;
         return dbc.addUser(account,strHash(pwd));

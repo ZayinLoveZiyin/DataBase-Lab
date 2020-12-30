@@ -5,9 +5,11 @@
 using namespace std;
 
 struct admin  {
+    int a_id;
     dbClient dbc;
-    admin(string name="",string pwd="")   {
-        if (!adminLogin::signIn(name,pwd))
+    admin(string name="",string pwd=""):a_id(adminLogin::signIn(name,pwd))   {
+        // cerr<<"a_id:"<<a_id<<endl;
+        if (!~a_id)
             throw "account not exist or wrong password.";
     }
 
