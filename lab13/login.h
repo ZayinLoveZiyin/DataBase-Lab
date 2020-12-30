@@ -4,8 +4,10 @@
 using namespace std;
 
 size_t strHash(string s)    {
-    static hash<string> h;
-    return h(s);
+    size_t hash=0;  
+    for (size_t ch:s)
+        hash=hash*131+ch;
+    return hash;  
 }
 
 size_t atoull(string s) {

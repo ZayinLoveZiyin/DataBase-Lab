@@ -27,8 +27,8 @@ create table user  (
 ) ENGINE=InnoDB,charset=gbk;
 
 insert into user
-    value   (1,'Zayin',9426639596209158849),
-            (2,'Ziyin',10852539927295326949);
+    value   (1,'Zayin',26725148063),
+            (2,'Ziyin',26743132791);
 
 select * from user;
 
@@ -103,10 +103,10 @@ create table admin  (
 ) ENGINE=InnoDB,charset=gbk;
 
 insert into admin
-    value   (1,'xlh',13610474319179662562),
-            (2,'xjc',7783510168219219153),
-            (3,'xby',101778777230498260),
-            (4,'xjj',17609314202929431821);
+    value   (1,'xlh',2073572),
+            (2,'xjc',2073305),
+            (3,'xby',2072279),
+            (4,'xjj',2073312);
 
 select * from admin;
 
