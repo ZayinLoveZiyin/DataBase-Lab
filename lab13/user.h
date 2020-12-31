@@ -21,6 +21,9 @@ struct user  {
     bool updPassenger(int p_id,string p_idcard_no,string p_name,string p_addr,string p_phone)    {
         return dbc.updPassenger(p_id,p_idcard_no,p_name,p_addr,p_phone);
     }
+    pair<vs,vector<vs> > getPassengers()    {
+        return dbc.getPassengers("u_id="+to_string(u_id));
+    }
     bool refund(int b_id)   {
         return dbc.delBook(u_id,b_id);
     }

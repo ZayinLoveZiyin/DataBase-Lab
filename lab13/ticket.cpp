@@ -122,7 +122,7 @@ pair<vs,vector<vs> > dbClient::getUsers(string cond) {
                     where "+cond);
 }
 pair<vs,vector<vs> > dbClient::getPassengers(string cond) {
-    return query("select p_name,p_idcard_no,p_addr,p_phone\
+    return query("select p_id,p_name,p_idcard_no,p_addr,p_phone\
                     from passenger\
                     where "+cond);
 }    

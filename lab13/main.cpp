@@ -48,6 +48,10 @@ int main()  {
     u.refund(1);
     
     print(a.getUserBooks(1));
+    
+    cout<<"------------------------------------------"<<endl;
+    
+    print(u.getPassengers());
     // cout<<adminLogin::signIn("xjj","xlh")<<endl;
     return 0;
 }
