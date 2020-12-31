@@ -14,6 +14,10 @@ void print(pair<vs,vector<vs> > p)    {
     cout<<endl;
 }
 
+void print(vector<int> v)    {
+    for (auto x:v) cout<<x<<" "; cout<<endl;
+}
+
 int main()  {
     // cout<<strHash("xlh")<<endl;
     // cout<<strHash("xjc")<<endl;
@@ -32,26 +36,46 @@ int main()  {
 
     admin a("xlh","xlh");
     
-    print(a.getBooks());
-    print(a.getBookTickets(1));
-    print(a.getPassengers());
-    print(a.getTickets());
-    print(a.getUserBooks(1));
-    print(a.getUsers());
-    print(a.getVehicles());
+    // print(a.getBooks());
+    // print(a.getBookTickets(1));
+    // print(a.getPassengers());
+    // print(a.getTickets());
+    // print(a.getUserBooks(1));
+    // print(a.getUsers());
+    // print(a.getVehicles());
 
     cout<<"------------------------------------------"<<endl;
-
-    print(a.getUserBooks(1));
 
     user u("Zayin","Zayin");
-    u.refund(1);
-    
-    print(a.getUserBooks(1));
+    print(u.getPassengers());
+
     
     cout<<"------------------------------------------"<<endl;
+
+    dbClient dbc;
+    print(a.getUserBooks(1));
+    print(dbc.getTickets());
+
+    if (!u.book(3,{1,2}))
+        cout<<dbc.getMsg()<<endl;
+    print(a.getUserBooks(1));
+    print(dbc.getTickets());
+
+    cout<<"------------------------------------------"<<endl;
+
+    u.refund(2);
     
-    print(u.getPassengers());
+    print(a.getUserBooks(1));
+    print(dbc.getTickets());
+
+    
+    cout<<"------------------------------------------"<<endl;
+
+    u.addPassenger("441284200001027894","邹丹梅","NULL","NULL");
+    print(a.getPassengers());
+
+
+    cout<<"end."<<endl;
     // cout<<adminLogin::signIn("xjj","xlh")<<endl;
     return 0;
 }

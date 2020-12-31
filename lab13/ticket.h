@@ -17,7 +17,7 @@ class dbClient  {
     static string flitter(string)   ;
 
     int getid(string)  ;
-    int getcid(string) ;
+    vector<int> getids(string,int)  ;
 
     vector<int> getseat(int);
     
